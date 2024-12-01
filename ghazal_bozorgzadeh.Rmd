@@ -1,0 +1,201 @@
+---
+title: "Untitled"
+author: "ghazal_bozorgzadeh"
+date: "2024-11-29"
+output: html_document
+---
+```{r}
+library(ggplot2)
+library(dplyr)
+library(e1071)
+library(car)
+library(pracma)
+#کتابخونه های لازمه رو فراخوانی مبکنیم 
+#my.id = 90
+#شماره دانشجویی 4012290170
+```
+
+
+```{r}
+data <- Salaries
+data
+
+#داده را در دیتا قرار میدهیم و آن را فراخوانی میکنیم 
+```
+
+
+
+```{r}
+set.seed(90) 
+my.id <- Salaries %>%
+  slice_sample(n = 90)
+
+```
+
+
+```{r}
+my.id
+
+```
+
+```{r}
+moteghayer <- my.id[["yrs.service"]]
+#ستون خواسته شده را در متغیر قرار میدهیم تا محاسبات را  بتونیم انجام بدیم  
+
+```
+
+
+```{r}
+moteghayer
+
+```
+
+
+```{r}
+mean(moteghayer)
+
+```
+
+
+```{r}
+var(moteghayer)
+
+```
+
+
+```{r}
+quantile(moteghayer) 
+
+#با این دستور میتونیم تمامی چارک هارا محسابه کنیم 
+#بطور مثال چارک سوم به ابن معناست هفتاد و پنج درصد داده ها کمتر ازین مقدار هستند 
+
+```
+
+```{r}
+x<-var(moteghayer)
+sqrt(x)
+
+# یا 
+sd(moteghayer)
+
+```
+
+
+```{r}
+median(moteghayer)
+
+```
+
+
+```{r}
+range_value <- max(moteghayer) - min(moteghayer)
+range_value
+#دامنه تغییرات 
+```
+
+
+```{r}
+skewness(moteghayer) #چولگی 
+kurtosis(moteghayer) #کشیدگی 
+#چولگی مثبت یعنی اینکه بیشتر داده ها در سمت چپ توزیع قرار دارند و مقادیر بزرگ در سمت راست قرار دارند 
+#کشیدگی منفی نشان‌دهنده توزیع پهن‌تر از نرمال است.
+```
+
+
+```{r}
+hist(moteghayer , col="green",border = "black",main = "histogram of yrs.service" )
+```
+
+```{r}
+set.seed(90)
+data1 <- data %>% sample_n(90)
+data1
+#نمونه به اندازه my.id
+```
+
+
+```{r}
+rank <-data1[["rank"]]
+salary <- data1[["salary"]]
+rank
+salary
+```
+
+
+```{r}
+#نمودار مناسب 
+hist(salary,col = 5)
+rank_nemod <- table(rank)
+pie(rank_nemod,main="PieChart rank",col = 10)
+
+
+
+
+
+
+
+#سوال پنج 
+f <- function(x) {
+  x^2 + 1 
+}
+integrate(f , lower =1/2 , upper = 3)
+
+```
+```{r} 
+#تمرین سوم 
+set.seed(90)
+numbers <-round(rnorm(100,50,10),0)
+n<-numbers[numbers%%6==0]
+print(n)
+
+
+```
+
+
+```{r}
+set.seed(90)
+g<- function(x,y){ 
+  x+y^2 -1 
+}
+integral2(g,xmin=3,xmax=5,ymin=0,ymax=1,reltol = 1e-10)
+
+```
+
+
+```{r}
+#سوال شیش
+A<- matrix(c(1,2,4,6,1,3,9,5,3),nrow = 3, ncol = 3, byrow = TRUE)
+A
+
+```
+
+
+```{r}
+det(A)
+#سوال شیش
+```
+
+
+```{r}
+A_inverse <- solve(A)
+A_inverse
+#سوال شبش
+```
+
+```{r}
+#سوال 4
+f <-function(x){
+  
+  length(x)/(sum(1/x))
+}
+f(salary)
+
+```
+
+```{r}
+#سوال شیش
+diag(A) <- 0
+A
+
+```
+
